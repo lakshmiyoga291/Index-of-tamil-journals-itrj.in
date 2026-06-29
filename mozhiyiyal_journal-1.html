@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>மொழியியல் இதழ் — குறியீட்டு அட்டவணை</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@300;400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --ink:       #1a1410;
+    --paper:     #f8f4ee;
+    --gold:      #b8873a;
+    --gold-lt:   #e8c97a;
+    --rust:      #7a3a1a;
+    --mist:      #e8e2d8;
+    --dim:       #6b5f52;
+    --rule:      #c8b89a;
+    --highlight: #fff8e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── MASTHEAD ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .masthead-inner {
+    max-width: 1100px;
+    margin: auto;
+    padding: 18px 24px 14px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .masthead-title {
+    flex: 1;
+    min-width: 200px;
+  }
+  .masthead-title h1 {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gold-lt);
+    line-height: 1.2;
+  }
+  .masthead-title p {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--rule);
+    margin-top: 2px;
+  }
+  .masthead-rule {
+    width: 2px;
+    height: 40px;
+    background: var(--gold);
+    opacity: 0.5;
+    display: none;
+  }
+  .masthead-meta {
+    font-size: 0.78rem;
+    color: var(--rule);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .masthead-meta strong { color: var(--gold-lt); }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    background: var(--mist);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 24px;
+  }
+  .toolbar-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: white;
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--gold); }
+  .search-wrap svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dim);
+    pointer-events: none;
+  }
+  select {
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: white;
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 0.82rem;
+    color: var(--ink);
+    cursor: pointer;
+    outline: none;
+  }
+  select:focus { border-color: var(--gold); }
+  .count-pill {
+    background: var(--gold);
+    color: white;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 24px;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    padding: 10px 18px;
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .stat-card .lbl {
+    font-size: 0.72rem;
+    color: var(--dim);
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    background: white;
+    border: 1px solid var(--rule);
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+  thead th {
+    background: var(--ink);
+    color: var(--gold-lt);
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  thead th:hover { background: #2a2018; }
+  thead th .sort-icon { opacity: 0.4; margin-left: 4px; font-size: 0.65rem; }
+  thead th.sorted .sort-icon { opacity: 1; color: var(--gold-lt); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--mist);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: var(--highlight); }
+  tbody tr.even { background: #fdfaf6; }
+  tbody tr.even:hover { background: var(--highlight); }
+
+  td {
+    padding: 9px 12px;
+    vertical-align: top;
+  }
+  td.num-col {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+    padding-right: 8px;
+    width: 40px;
+  }
+  td.title-col {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 200px;
+    max-width: 320px;
+  }
+  td.author-col {
+    color: var(--rust);
+    font-size: 0.82rem;
+    white-space: nowrap;
+    min-width: 120px;
+  }
+  td.pages-col {
+    color: var(--dim);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    font-family: 'Crimson Pro', serif;
+  }
+  td.year-col {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    color: var(--dim);
+  }
+  td.vol-col {
+    white-space: nowrap;
+  }
+  .vol-badge {
+    display: inline-block;
+    background: var(--mist);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 1px 7px;
+    font-size: 0.72rem;
+    color: var(--dim);
+    font-family: 'Crimson Pro', serif;
+    white-space: nowrap;
+  }
+  .special-badge {
+    display: inline-block;
+    background: #f0e8d0;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    padding: 1px 6px;
+    font-size: 0.65rem;
+    color: var(--rust);
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--dim);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  td.link-col { white-space: nowrap; }
+  .tva-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--ink);
+    color: var(--gold-lt);
+    text-decoration: none;
+    font-size: 0.72rem;
+    padding: 3px 9px;
+    border-radius: 2px;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .tva-link:hover { background: var(--rust); }
+  .unavailable {
+    font-size: 0.72rem;
+    color: var(--dim);
+    font-style: italic;
+  }
+  tr.content-unavailable td { opacity: 0.6; }
+  tr.content-unavailable td.title-col {
+    font-style: italic;
+    color: var(--dim);
+    font-weight: 400;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--dim);
+    font-size: 0.75rem;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  mark {
+    background: #ffe58a;
+    color: var(--ink);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  @media (max-width: 640px) {
+    .masthead-title h1 { font-size: 1.3rem; }
+    td.title-col { min-width: 140px; max-width: 200px; }
+    .stats-bar { gap: 8px; }
+    .stat-card { padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead-inner">
+    <div class="masthead-title">
+      <h1>மொழியியல் இதழ்</h1>
+      <p>Tamil Linguistics Journal — Article Index 1978–1991</p>
+    </div>
+    <div class="masthead-meta">
+      <div>வெளியீடு: <strong>தமிழ் மின்பலகம் TVA</strong></div>
+      <div>தொகுப்பு: <strong>ச. அகத்தியலிங்கம்</strong> & குழு</div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="தேடு — தலைப்பு, ஆசிரியர்..." autocomplete="off">
+    </div>
+    <select id="yearFilter">
+      <option value="">அனைத்து ஆண்டுகள்</option>
+    </select>
+    <select id="volFilter">
+      <option value="">அனைத்து தொகுதிகள்</option>
+    </select>
+    <span class="count-pill" id="resultCount">— கட்டுரைகள்</span>
+  </div>
+</div>
+
+<main>
+  <div class="stats-bar">
+    <div class="stat-card"><div class="num" id="s-total">232</div><div class="lbl">மொத்த கட்டுரைகள்</div></div>
+    <div class="stat-card"><div class="num">14</div><div class="lbl">ஆண்டுகள்</div></div>
+    <div class="stat-card"><div class="num">14</div><div class="lbl">தொகுதிகள்</div></div>
+    <div class="stat-card"><div class="num">26</div><div class="lbl">இதழ்கள்</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="articleTable">
+      <thead>
+        <tr>
+          <th data-col="id" class="sorted">வ.எண் <span class="sort-icon">▲</span></th>
+          <th data-col="title">தலைப்பு <span class="sort-icon">↕</span></th>
+          <th data-col="author">ஆசிரியர் <span class="sort-icon">↕</span></th>
+          <th data-col="pages">பக்கம் <span class="sort-icon">↕</span></th>
+          <th data-col="year">ஆண்டு <span class="sort-icon">↕</span></th>
+          <th data-col="vol">தொகுதி / எண் <span class="sort-icon">↕</span></th>
+          <th>TVA இணைப்பு</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="no-results" id="noResults" style="display:none">தேடல் பொருந்தவில்லை. வேறு சொல் முயற்சிக்கவும்.</div>
+  </div>
+</main>
+
+<footer>
+  மொழியியல் இதழ் குறியீட்டு அட்டவணை — தமிழ் மொழியியல் ஆய்வு இதழ் (1978–1991) &nbsp;|&nbsp; TVA Tamil Digital Library
+</footer>
+
+<script>
+const ARTICLES = [
+  {id:1,title:"சுள்ளியியலும் தொல்காப்பியமும்",author:"காமேஸ்வரி தெ. நா.",pages:"1-12",year:"1978",period:"ஜனவரி - ஜூன்",vol:"1",no:"3&4",special:""},
+  {id:2,title:"திராவிட மொழிகளின் அமைப்பொற்றைமை",author:"சுப்பிரமணியம் பி.எஸ்.",pages:"13-45",year:"1978",period:"ஜனவரி - ஜூன்",vol:"1",no:"3&4",special:""},
+  {id:3,title:"மொழியும் ஒலியும் : உயிரொலிகள்",author:"துகையன் க.",pages:"47-55",year:"1978",period:"ஜனவரி - ஜூன்",vol:"1",no:"3&4",special:""},
+  {id:4,title:"தமிழில் தொடர்ப் பதிற்பெயர்கள்",author:"இராமசாமி க.",pages:"59-78",year:"1978",period:"ஜனவரி - ஜூன்",vol:"1",no:"3&4",special:""},
+  {id:5,title:"பெட்டக்கும்ப மொழியியல் விைனப்படுப்பும் காலங்காட்டும் இடைநிலைகளும்",author:"ஜெயபால் எஸ்.",pages:"79-92",year:"1978",period:"ஜனவரி - ஜூன்",vol:"1",no:"3&4",special:""},
+  {id:6,title:"விைனுற்கள் - ஒப்பாய்வு : தொல்காப்பியமும் நன்னூலும்",author:"சிவதாசு சொ.",pages:"93-129",year:"1978",period:"ஜனவரி - ஜூன்",vol:"1",no:"3&4",special:""},
+  {id:7,title:"தமிழில் எழுத்து வழக்கிற்கும் பேச்சு வழக்கிற்கும் இடையே உள்ள உறவு",author:"தெய்வ நந்தரம் ந.",pages:"1-13",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:8,title:"வல்லொரு மெல்லொரு மாற்றம் - சில குறிப்புகள்",author:"பர்ரோ T.",pages:"15-35",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:9,title:"பஸ்தர் மாவட்டத்துக் கோண்டுக் கிளைமொழிகள்",author:"நடராஜன் G. வி.",pages:"37-47",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:10,title:"மொழித் தர்வல்",author:"கணாகரன் கி.",pages:"49-60",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:11,title:"மாற்றிலக்கணமும் மொழி பயில்தலும்",author:"நடராஜ பிள்ளை ந.",pages:"63-74",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:12,title:"தொல்காப்பியரின் சொல்லியல் கோட்பாடு",author:"சண்முகம் செ.வை.",pages:"75-100",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:13,title:"விைனயச்சங்கள்",author:"சந்திரத்திரன் அ.",pages:"101-128",year:"1978",period:"ஜூன் - ஆகஸ்டு",vol:"2",no:"1",special:""},
+  {id:14,title:"சங்க இலக்கியத்தில் வேற்றுமை உகள் - ஓர் ஆய்வு",author:"சுப்பராஜ் V.S.",pages:"1-24",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:15,title:"தமிழில் வினாச்சொற்கள்",author:"ஜான் பிரூலா உ.",pages:"25-56",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:16,title:"பேச்சும் எழுத்தும்",author:"சண்முகம் செ.வை.",pages:"57-85",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:17,title:"தன்மை, முன்னிலை 'பன்மை'கள்",author:"குமாரசாமி ராஜா ந.",pages:"87-93",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:18,title:"தமிழில் மொழித்திரி",author:"கணாகரன் கி. & இளப்பன் கி.சு.",pages:"95-111",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:19,title:"தமிழ்ச் சொற்களஞ்சியத்தில் நிலையாக்கம்",author:"பாலகிஷ்ணன் இரா.",pages:"113-127",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:20,title:"கிளைமொழிகள் வேபடும் முறைகள்",author:"ஸ்ரீனிவாசவர்மா கோ.",pages:"129-140",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:21,title:"மொழி நடை - பாடுபாடுகளும், வெளிக்கொணரும் முறைகளும்",author:"ஞானம் சு.",pages:"141-154",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:""},
+  {id:22,title:"பதிப்புரை",author:"அகத்தியலிங்கம் ச. & சண்முகம் செ.வை.",pages:"I-V",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:23,title:"எழுத்து முறை - வாழ்வும் வரலாறும்",author:"அகத்தியலிங்கம் ச.",pages:"1-40",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:24,title:"தமிழ் எழுத்துச் சீர்திருத்தம்",author:"புனைவாட்சி நந்தரனார் தெ.பொ.",pages:"41-53",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:25,title:"தமிழ் எழுத்துச் சீர்மை",author:"தில்லைநாயகம் வே.",pages:"55-76",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:26,title:"தமிழில் எழுத்துச் சீர்திருத்தம்",author:"கோதண்டராமன் பொன்.",pages:"77-86",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:27,title:"பொறித்தமிழ் கொடுமுடு",author:"சண்முகம்",pages:"87-96",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:28,title:"தமிழ் எழுத்துக்களில் சில மாதல்கள்",author:"நல்லதம்பி சு.",pages:"97-110",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:29,title:"தமிழ் எழுத்துச் சீர்திருத்தம்",author:"கிருஷ்ணமூர்த்தி இரா.",pages:"111-126",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:30,title:"மொழியும் விழியும்",author:"மகாதேவன்.",pages:"127-136",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:31,title:"தமிழ் எழுத்துகளில் சீர்திருத்தம்",author:"அழகப்பன் ஆ.",pages:"137-142",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:32,title:"சீர்திருத்துவோம் தமிழ் எழுத்துகளை",author:"சந்தர் இ.ஜே.",pages:"143-148",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:33,title:"தமிழில் நித்தக் குறிகள்",author:"பாலகிஷ்ணன் இரா.",pages:"149-168",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:34,title:"தமிழ் ஈயிர்கள்",author:"துகையன் க.",pages:"169-202",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:35,title:"உலக மொழிகளில் எழுத்துத் திருத்தம்",author:"சண்முகம் செ.வை.",pages:"203-242",year:"1979",period:"டிசம்பர் - பிப்ரவரி",vol:"2",no:"3",special:"எழுத்துச் சீர்திருத்த மலர்"},
+  {id:36,title:"மள்ளர் கையறை மூர்வாள்",author:"கோதண்டராமன் இரா.",pages:"1-64",year:"1979",period:"மார்ச் - மே",vol:"2",no:"4",special:""},
+  {id:37,title:"பேச்சுத் தமிழ் இலங்கையிலும் தமிழகத்திலும்",author:"ஏகதாசன் சி.",pages:"65-88",year:"1979",period:"மார்ச் - மே",vol:"2",no:"4",special:""},
+  {id:38,title:"தொல்காப்பியமும் அகராதியும்",author:"காமேஸ்வரி தெ.நா.",pages:"93-107",year:"1979",period:"மார்ச் - மே",vol:"2",no:"4",special:""},
+  {id:39,title:"மொழித்திறனும் மொழி பயில்தலும்",author:"நடராசப்பிள்ளை ந.",pages:"109-121",year:"1979",period:"மார்ச் - மே",vol:"2",no:"4",special:""},
+  {id:40,title:"தொல்காப்பியத்தில் நேரும் காலமும்",author:"திலகவதி க.",pages:"123-146",year:"1979",period:"மார்ச் - மே",vol:"2",no:"4",special:""},
+  {id:41,title:"சங்கத் தமிழில் தன்மை ஒன்மை",author:"அகத்தியலிங்கம் ச.",pages:"1-37",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:42,title:"தமிழ் கற்பித்தல் - சில சிக்கல்கள்",author:"நந்தரம் இராம.",pages:"39-45",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:43,title:"திராவிட மொழிகளில் சொல்முதல்க - வின் இதழ வளர்ச்சிநிலை",author:"பர்ரோ T.",pages:"47-90",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:44,title:"மொழி வளர்ச்சியும் தகுதி செய்சொற்பாடுகளும்",author:"நடராஜன் எஸ்.",pages:"91-101",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:45,title:"அடுநிலைக்கிளவி கோட்பாடு",author:"கோதண்டராமன் பொன்.",pages:"103-110",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:46,title:"குறி மாற்றமும் குறி கலத்தலும்",author:"சுத்தசாமிப்பிள்ளை பி.",pages:"111-121",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:47,title:"இந்திய மொழிகளில் திராவிட மொழிகளின் செல்வாக்கு",author:"புனைவாட்சி நந்தரன் தெ.பொ.",pages:"123-131",year:"1979",period:"ஜூன் - ஆகஸ்டு",vol:"3",no:"1",special:""},
+  {id:48,title:"உணர்ச்சியில் எண்ணும்ப்பெயர்கள்",author:"குமாரசாமி ராஜா ந.",pages:"1-14",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:49,title:"அறிந்த முகங்களில் அறியாத முகங்கள்",author:"கோதண்டராமன் இரா.",pages:"15-51",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:50,title:"பொதுப் பேச்சுத் தமிழ் : அதில் இடைநிலையின் பங்கு",author:"ஞான நந்தரம் வ.",pages:"53-104",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:51,title:"ஒரு திய பார்வை: இன்றைய மொழியியற்கொள்ளைகளும் தமிழ் இலக்கிய இலக்கணங்களும்",author:"சண்முகம் இராம.",pages:"105-111",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:52,title:"வகைப்பாடும் பெயரும்",author:"கோதண்டராமன் பொன்.",pages:"113-118",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:53,title:"மானிட மொழியியல்",author:"சக்திவேல்.",pages:"119-150",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:54,title:"ஒலியும் உணர்வும்",author:"தாட்சாயிணி கே.வி.",pages:"151-157",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:55,title:"தமிழ் பயிற்றல்",author:"சங்கரநாராயணன் கோ.",pages:"159-168",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:56,title:"தொடர் மொழியியல் பொள்நிலை",author:"பாலகிஷ்ணன் இரா.",pages:"169-186",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:57,title:"படர்க்கை இடப்பெயர் தான் - அதன் தொடரியல் பண்புகள்",author:"சிலா எம்.",pages:"187-197",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:58,title:"உளவியலும் மொழிபயில் கோட்பாடும்",author:"நடராச பிள்ளை ந.",pages:"199-219",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:59,title:"சென்னை முன்னவர் கிளைமொழியில் வேற்றுமை உகள்",author:"ராஜகுமாரி கே. வி.",pages:"221-229",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:60,title:"வட்டார வழக்கில் வேளாண் கலைச்சொற்கள்",author:"ஸ்ரீனிவாசவர்மா கோ.",pages:"231-241",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:61,title:"மொழி இணைமாற்றம்",author:"ஆனந்தராசன் சு.",pages:"243-256",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:62,title:"சங்கத் தமிழில் ஏவல் வினை",author:"அகத்தியலிங்கம் ச.",pages:"257-300",year:"1979",period:"செப்டம்பர் - ஜனவரி",vol:"3",no:"2&3",special:"சண்முகம்பிள்ளை மணிவிழா மலர்"},
+  {id:63,title:"டாக்டர் தெ.பொ. புனைவாட்சி நந்தரனார்",author:"அகத்தியலிங்கம் ச.",pages:"I-IV",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:64,title:"தமிழில் ஏவல்",author:"சிதம்பரநாதன் வே.",pages:"1-14",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:65,title:"தமிழில் 'ஆக'",author:"மகேஸ்வரன் சி.",pages:"15-24",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:66,title:"பெட்டக்கும்ப மொழியில் வேற்றுமை",author:"ஜெயபால் எஸ்.",pages:"25-38",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:67,title:"சங்கத் தமிழில் நேரப்பெயர்கள்",author:"சண்முகம் செ.வை.",pages:"39-64",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:68,title:"தமிழ் மொழியில் துணை வினைகளின் பங்கு",author:"ஜோசப் என்.",pages:"65-81",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:69,title:"மொழியில் பிரதிபலிக்கும் சமுதாய நோக்கள்",author:"புனைவாட்சி நந்தரன் தெ.பொ.",pages:"83-95",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:70,title:"அஷ்டாத்தியாயிலும் தொல்காப்பியத்திலும் உள்ள இலக்கண கோட்பாடுகள்",author:"புனைவாட்சி சு.",pages:"97-120",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:71,title:"மொழிவேபாட்டின் கோட்பாடுகள்",author:"ஏகதாசன் சி.",pages:"121-148",year:"1980",period:"பிப்ரவரி - ஜூன்",vol:"3",no:"4",special:""},
+  {id:72,title:"ஆகுபெயம் சொற்றொடம்",author:"சுப்பிரமணியன் சி.",pages:"1-14",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:73,title:"மாற்றிலக்கணமும் யாப்பியலும்",author:"பிச்சை அ.",pages:"15-28",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:74,title:"தொல்காப்பிய சங்க இலக்கிய விளி - ஓர் ஒப்பு",author:"அழகேசன்.",pages:"29-40",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:75,title:"பழந்தமிழில் எதிர்மறை எச்சங்கள்",author:"சுபாஷ் சந்திரபோஸ் ச.",pages:"41-53",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:76,title:"கசவ மொழியில் செய்து வாய்ப்பாட்டு விைனயெச்சம்",author:"சிதம்பரநாதன் வே.",pages:"55-63",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:77,title:"சங்க தமிழில் பலர் பால்",author:"அகத்தியலிங்கம் ச.",pages:"65-95",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:78,title:"சுழற்சிமுறையும் 'தான்' பிரதிப்பெயராக்கமும்",author:"சிலா எம்.",pages:"97-104",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:79,title:"திராவிடப் பிரதி பெயர்கள் வேபாடு",author:"ஞானம் சு.",pages:"105-114",year:"1981",period:"ஜனவரி - மார்ச்",vol:"4",no:"3",special:""},
+  {id:80,title:"தமிழில் வினைவகைப்பாடு",author:"அகத்தியலிங்கம் ச.",pages:"1-44",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:81,title:"மாற்றிலக்கண விதிகளின் வரன்முறை",author:"பத்மநாப பிள்ளை ப.",pages:"45-50",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:82,title:"எதிர்மறைப் பெயர்கள்",author:"கமலேஸ்வரன் கே.எஸ்.",pages:"51-60",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:83,title:"நேரக்கிளவியும் விைனயெச்சமும்",author:"மாதையன் பெ.",pages:"61-70",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:84,title:"தமிழில் சொல்லாக்கம்",author:"கார்த்திகேயன் ஆ.",pages:"71-80",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:85,title:"வழக்கு வேபாடுகளும் இரண்டாம் மொழி பயில்தலில் மொழித்திறனின் பங்கும்",author:"நடராசப்பிள்ளை ந.",pages:"81-107",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:86,title:"பணிமொழியில் வேற்றுமை",author:"மூன் லாரன்ஸ் எஸ்.",pages:"109-122",year:"1981",period:"ஏப்ரல் - ஜூன்",vol:"4",no:"4",special:""},
+  {id:87,title:"பேச்சு மொழியின் இலயமும் பாரதி காட்டிய பெருமையும்",author:"புனைவாட்சி நந்தரன் தெ.பொ.",pages:"1-28",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:88,title:"கிளைமொழியியல் : கிளைமொழி அகராதி",author:"ஸ்ரீனிவாச வர்மா கோ.",pages:"29-54",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:89,title:"வாய்மொழியும் வரைமொழியும்",author:"யூதிவாணன் ஜெ.",pages:"29-37",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:90,title:"இ என்ற வினையாக்கவிகுதி",author:"கோதண்டராமன் பொன்.",pages:"39-45",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:91,title:"முன்னவர் தமிழில் கலைச்சொற்கள்",author:"இராஜகுமாரி கே. வி.",pages:"47-58",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:92,title:"தமிழில் பின்னோக்குப் பிரதிப்பெயராக்கம்",author:"பத்மநாபபிள்ளை ப.",pages:"59-64",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:93,title:"சாதிக் கிளைமொழியா? சமூகக் கிளைமொழியா?",author:"மனோகரன் ச.",pages:"65-83",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:94,title:"சமூகத் தொடர்பும் மரியாதையும் - நடத்துநர்களின் மொழிப் பயன்பாடு",author:"ஆனந்தராசன் சு.",pages:"85-99",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:95,title:"பயனிலை : அகமும் புறமும்",author:"கோதண்டராமன் இரா.",pages:"101-130",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:96,title:"உலக அரங்கில் தமிழ் வளர்ச்சியும் பயிற்சியும்",author:"அகத்தியலிங்கம் ச. & சக்திவேல்.",pages:"131-160",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:97,title:"தக்கனி உதில் தமிழின் செல்வாக்கு",author:"காதர் மொஹிதீன் எஸ்.",pages:"161-170",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:98,title:"இளம் ஆராய்வர் உரை சுருக்கம்",author:"தாட்சாயணி கே. வி.",pages:"171-176",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:99,title:"தமிழ் ஒலிகளின் சிறப்பியல்கள்",author:"இராமசாமி என்.",pages:"177-184",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:100,title:"தமிழில் நேர்க்கூற்றும் அயற்கூற்றும்",author:"லாபாய் க.",pages:"185-197",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:101,title:"தொல்காப்பியம் எழுந்ததின் நோக்கம்",author:"புனைவாட்சி சு.",pages:"199-212",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:102,title:"தமிழ்த் துணைவினைகள் முதல் வினைகளிலிருந்து தவிர்க்கப்படுகின்றன என்னும் கூற்றிற்கு ஒரு சான்று",author:"திலகவதி க.",pages:"213-235",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:103,title:"தமிழ் ஆய்வேடுகளில் காணும் சில குறைகள்",author:"திமலை மா..",pages:"237-246",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:104,title:"தமிழ் வினாக்களின் ஒலியேற்றம்",author:"இரவிசங்கர் க.",pages:"247-264",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:105,title:"பழந்தமிழில் உந்து",author:"முகரத்தினம் தி.",pages:"265-272",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:106,title:"மேடைப் பேச்சில் பொள் விளக்கம்",author:"கணேசன் மா.",pages:"273-291",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:107,title:"கல்லாதவர்களின் பேச்சுத் தமிழில் ஆங்கிலச் சொற்களின் நிலை",author:"இராதாகிருஷ்ணன் ச.",pages:"293-308",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:108,title:"தேர்வுக் கட்டுப்பாடுகளும் மொழி கற்பித்தலும்",author:"நடராசப்பிள்ளை ந.",pages:"309-319",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:109,title:"கம்பராமாயணக் கட்டளைக்கலித்துறைகள்",author:"பதி ம.ரா.",pages:"321-332",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:110,title:"மொழியும் நிலைபேராக்கமும்",author:"ஞான நந்தரம் வ.",pages:"333-362",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:111,title:"எளிமையாக்கம் : துய்மையாக்கத்தின் ஒரு முறை",author:"அண்ணாமலை இ.",pages:"363-376",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:112,title:"தமிழ்ச் சிகைதகளில் இரட்டை வழக்கு",author:"தெய்வ நந்தரம் ந.",pages:"377-389",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:113,title:"மொழிஞாயிறு ஞா. தேவநேயப்பாவாணர்",author:"சக்திவேல்.",pages:"391-394",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:114,title:"வானொலித் தமிழ் : ஓர் அறிமுகம்",author:"ஆரோக்கியநாதன் எஸ்.",pages:"395-412",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:115,title:"தொல்காப்பியனார் கண்ட மொழியியல் உறழ்வு",author:"இளப்பன் கே.எம்.",pages:"413-423",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:116,title:"கூரசோழியம் : ஒரு மொழியியல் ஆய்வு",author:"சண்முகம் செ.வை.",pages:"425-488",year:"1980",period:"ஜூலை - டிசம்பர்",vol:"4",no:"1&2",special:""},
+  {id:119,title:"விரவுப்பெயர்கள் பால் உணர்த்தும் முறை",author:"சண்முகம் செ.வை.",pages:"1-30",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:120,title:"தற்சுட்டுப் பதிலுடுபெயர் நூக்கம்",author:"பத்மநாபபிள்ளை ப.",pages:"31-34",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:121,title:"மொழியியற் பேரறிஞர்",author:"சக்திவேல்.",pages:"35-40",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:122,title:"செயப்படுபொள் குன்றிய/குன்றா வினைகளும் காரண வினைகளும்",author:"சந்திரத்திரன் H.",pages:"41-74",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:123,title:"தமிழகமொழிகள் - ஒரு மதிப்பீடு",author:"விஜயேந்திரபாஸ் V.S.",pages:"75-86",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:124,title:"'சுரசம் ஹாரம்' நாவலில் காணும் இலங்கைத் தமிழ்",author:"வளவன் சா.",pages:"87-98",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:125,title:"வினையாக்கிகள்",author:"கார்த்திகேயன் ஆ.",pages:"99-108",year:"1982",period:"ஜனவரி - மார்ச்",vol:"5",no:"3",special:""},
+  {id:126,title:"தமிழ் இலக்கணம் கற்பித்தல்",author:"புனைவாட்சி நந்தரன் தெ.பொ.",pages:"1-32",year:"1982",period:"ஏப்ரல் - ஜூன்",vol:"5",no:"4",special:""},
+  {id:127,title:"முதற்சங்கத் தமிழ் : நின்மெய்",author:"லோகநாத முத்தரையன் கி.",pages:"33-72",year:"1982",period:"ஏப்ரல் - ஜூன்",vol:"5",no:"4",special:""},
+  {id:128,title:"ஒலியனியல் விதிகள்",author:"இராமசாமி என்.",pages:"73-98",year:"1982",period:"ஏப்ரல் - ஜூன்",vol:"5",no:"4",special:""},
+  {id:129,title:"தமிழ் வழக்குகள்",author:"சக்திவேல் சி.",pages:"99-116",year:"1982",period:"ஏப்ரல் - ஜூன்",vol:"5",no:"4",special:""},
+  {id:130,title:"மொழிவழி பொருட்போக்குகள்",author:"பிச்சை அ.",pages:"117-130",year:"1982",period:"ஏப்ரல் - ஜூன்",vol:"5",no:"4",special:""},
+  {id:133,title:"பழந்தமிழ் நூல்களின் தொகுப்பு வரிசைமுறை",author:"அகத்தியலிங்கம் ச.",pages:"1-98",year:"1983",period:"ஜனவரி - மார்ச்",vol:"6",no:"3",special:""},
+  {id:134,title:"லண்டன் மொழியியல் கோட்பாடு",author:"சண்முகம் செ.",pages:"99-146",year:"1983",period:"ஜனவரி - மார்ச்",vol:"6",no:"3",special:""},
+  {id:135,title:"விரவுத்திணை",author:"சண்முகம் செ.வை.",pages:"1-74",year:"1983",period:"ஏப்ரல் - ஜூன்",vol:"6",no:"4",special:""},
+  {id:136,title:"கலைக்களஞ்சிய உவாக்கம் சில அடிப்படைக் குறிப்புகள்",author:"மூர்த்தி சு.",pages:"75-92",year:"1983",period:"ஏப்ரல் - ஜூன்",vol:"6",no:"4",special:""},
+  {id:137,title:"கல்வெட்டுத் தமிழ் - சில நோக்குகள்",author:"பாக்கியலட்சுமி இரா.",pages:"93-107",year:"1983",period:"ஏப்ரல் - ஜூன்",vol:"6",no:"4",special:""},
+  {id:138,title:"மொழிச்செயற்கம் : மறைந்து போன தொடர்ச் சங்கிலி",author:"நடராசப்பிள்ளை ந.",pages:"109-122",year:"1983",period:"ஏப்ரல் - ஜூன்",vol:"6",no:"4",special:""},
+  {id:139,title:"பெயரைச் சொல்லலாயா!",author:"ஆரோக்கியநாதன் எஸ்.",pages:"123-131",year:"1983",period:"ஏப்ரல் - ஜூன்",vol:"6",no:"4",special:""},
+  {id:141,title:"இக்காலத் தமிழில் கலப்பு வாக்கியங்கள் (complex sentences)",author:"முத்துச்சண்முகன் & தாமஸ் லேமன்",pages:"1-26",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:142,title:"நேமிநாதம் - ஓர் ஒப்பாய்வு (எழுத்து)",author:"யம் பி.பெ.",pages:"27-39",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:143,title:"தமிழில் துணைவினைகள்",author:"ரேணுகாதேவி கூ.",pages:"41-58",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:144,title:"சமுதாய வட்டார தமிழ்க் கிளைமொழிகள் - ஆய்வின் அணுகுமுறைகளும் பிரச்சனைகளும்",author:"மகாலிங்கம் க.",pages:"59-81",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:145,title:"மைத்திரி - ஒரு மொழியியல்",author:"வரதபதி எஸ்.",pages:"82-94",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:146,title:"விளிமரபில் விரவுத்திணை",author:"சண்முகம் செ.வை.",pages:"95-124",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:147,title:"தமிழ் அகராதியின் தந்தை பெஸ்கி எனும் கூரமாமுனிவர்",author:"சக்திவேல்.",pages:"125-131",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:148,title:"கோபன்ஹேகன் மொழியியல் கோட்பாடு (யெம்ஸ்லெவின் மொழியியல் கொள்ளைகள்)",author:"சண்முகன் செ.",pages:"132-187",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:149,title:"மாரைக்கிளவி",author:"அகத்தியலிங்கம் ச.",pages:"188-200",year:"1984",period:"ஜனவரி - ஜூன்",vol:"7",no:"3&4",special:""},
+  {id:150,title:"கல்லூரி நிலையில் மொழி அறிவின் அளவும் பாடத்திட்டமும்",author:"இராசாராம்.",pages:"1-17",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:151,title:"தொல்காப்பியரின் இயற்பெயர் கோட்பாடு",author:"ஆதித்தன் ஏ.",pages:"19-32",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:152,title:"வழக்கு வேபாடுகள் - வழக்கு இலக்கியங்கள்",author:"நடராசப்பிள்ளை ந. & விமலா ச.",pages:"33-80",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:153,title:"இடம் மாறிய வேற்றுமை இயல்",author:"நடராஜன் ஆ.கோ.",pages:"81-100",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:154,title:"மொழியியல் பார்வையில் செப்பேடுகள்",author:"ஆரோக்கியநாதன் எஸ்.",pages:"101-110",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:155,title:"தொல்காப்பியம் — இடைச்சொல் விளக்கம்",author:"இஸ்ரேல் மோ.",pages:"111-128",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:156,title:"பேச்சுத் தமிழ் பற்றிய மனப்பாங்குகளும்",author:"சுஃமான் எம்.ஏ.",pages:"129-165",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:157,title:"மலைநாட்டில் மக்கள் தமிழ்",author:"கணாகரன் கி.",pages:"167-174",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:158,title:"இரண்டு மொழியக் கல்வி",author:"கூரப்பன் பா.",pages:"175-185",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:159,title:"கூட்டுப்பெயர்",author:"பையா கோ.",pages:"187-191",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:160,title:"'செய்யாய்' என்னும் முன்னிலை வினைச்சொல்",author:"அகத்தியலிங்கம் ச.",pages:"193-205",year:"1984",period:"ஜூலை - டிசம்பர்",vol:"8",no:"1&2",special:""},
+  {id:161,title:"சொல்லும் பொளும்",author:"மணியன் தங்க.",pages:"1-18",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:162,title:"தமிழ்த் தொடரனில் உள் வினைகள்",author:"கோதண்டராமன் இரா.",pages:"19-45",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:163,title:"திராவிட மொழிகளில் நிகண்டுகள்",author:"சற்குணம் மா.",pages:"47-56",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:164,title:"எவை பதினெண் கீழ்க்கணக்கு நூற்கள்?",author:"ஆதித்தன் ஏ.",pages:"57-70",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:165,title:"உயர்நிலைப் பள்ளி / கல்லூரியில் இலக்கணம் கற்பித்தல்",author:"பையா கோ.",pages:"71-78",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:166,title:"நெசவுத் தொழிற் சொற்கள் : மொழியியல் ஆய்வு",author:"கார்த்திகேயன் ஆ.",pages:"79-96",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:167,title:"விைனயெச்சம் கொண்டு செய்யப்படும் கலப்பு வாக்கியங்களில் ஒரு விலக்கு",author:"வா அரங்க.",pages:"97-102",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:168,title:"தற்காலத் தமிழில் உளப்பாட்டு, வேபாட்டுத் தன்மை பன்மை வேபாடுகள் விகுதிகளிலும் காணப்படுகின்றனவா?",author:"மகேஸ்வரன் சி.",pages:"103-108",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:169,title:"கணிப்பொறி மொழியியல்",author:"பிச்சை அ.",pages:"109-125",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:170,title:"மலாய் மொழியில் சில தமிழ்ச் சொற்கள்",author:"கணாகரன் கி.",pages:"127-130",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:171,title:"இக்காலத் தமிழில் எடுத்துக்கூதல்",author:"முத்துச்சண்முகன் & தாமஸ் லெய்மன்",pages:"131-140",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:172,title:"விவசாயத் தொழில் கலைச்சொற்கள் - ஓர் ஒப்பாய்வு (துவை - காரைக்கால் பகுதிகள்)",author:"முகேசன் சு.",pages:"141-164",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:173,title:"கிளைமொழியும் பொதுப்பேச்சுத் தமிழும்",author:"ஆரோக்கியநாதன் எஸ்.",pages:"165-180",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:174,title:"பழந்தமிழில் காலவெச்சங்கள்",author:"அகத்தியலிங்கம் ச.",pages:"181-212",year:"1985",period:"ஜூலை - டிசம்பர்",vol:"9",no:"1&2",special:""},
+  {id:175,title:"இக்காலத் தமிழில் கூட்டுவினைகள்",author:"முத்துச்சண்முகன்",pages:"1-42",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:176,title:"மொழியும் ஒலியும் : உயிரல்லா ஒலிகள்",author:"துகையன் க.",pages:"43-53",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:177,title:"தமிழ்த் தொடரனில் உள் வினைகள்",author:"கோதண்டராமன் இரா.",pages:"55-63",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:178,title:"விவசாயத் தொழில் கலைச்சொற்கள் - ஓர் ஒப்பாய்வு",author:"முகேசன் சு.",pages:"65-77",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:179,title:"மொழியியலும் மொழிப்பொதுமைகளும்",author:"அரங்கன் கி.",pages:"79-90",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:180,title:"தமிழில் துச்சொல்லாக்கம்",author:"கணாகரன் கி. & ஜெயா திமதி வ.",pages:"91-116",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:181,title:"மொழியியலும் இடப்பெயர் ஆய்வும்",author:"ஆரோக்கிய நாதன் எஸ்.",pages:"117-129",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:182,title:"அறிவியல் தமிழ்ப்பாடம்",author:"சண்முகம் செ.வை.",pages:"131-140",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:183,title:"தொல்காப்பியரின் இயற்பெயர் கோட்பாடு",author:"ஆதித்தன் ஏ.",pages:"141-154",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:184,title:"பழந்தமிழில் கால எச்சங்கள்",author:"அகத்தியலிங்கம் ச.",pages:"155-195",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:185,title:"திராவிட மொழிகளின் கால அட்டவணை: ஒரு சுள்ளியியல் - அகராதி தியான ஆய்வு",author:"காமேஸ்வரி தெ.நா.",pages:"197-204",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:186,title:"பேச்சுத் தமிழில் ஆங்கிலச் சொற்களின் ஆதிக்கம்",author:"சிவக்குமார் சு.",pages:"205-212",year:"1986",period:"ஜனவரி - ஜூன்",vol:"9",no:"3&4",special:""},
+  {id:187,title:"செய்கைகள் சொற்களை விட உரக்கப் பேச வல்லவை",author:"யூதா வி. & கிருஷ்ணமூர்த்தி எஸ்.",pages:"1-30",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:188,title:"கலைச்சொல்லாக்கமும் தரப்பாடும்",author:"சண்முகம் செ.வை.",pages:"31-40",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:189,title:"தொல்காப்பியமும் பாணினியமும் : ஓர் ஒப்பாய்வு",author:"பால சுப்பிரமணியமன் க.",pages:"41-75",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:190,title:"மாற்றிலக்கணப் போராட்டம்",author:"செல்லமுத்து த.",pages:"77-92",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:191,title:"தமிழில் வினையடைகள்",author:"ரேணுகாதேவி கூ.",pages:"93-108",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:192,title:"கணிப்பொறியும், மொழி பயிற்றலும் - ஒரு கண்ணோட்டம்",author:"பாலகுமார் சு.",pages:"109-115",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:193,title:"பாரதிதாசனும் வடமொழியும் - ஒரு மொழியியற் கண்ணோட்டம்",author:"காமட்சிநாதன் அ.",pages:"117-134",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:194,title:"பாசூர் - ஊர்பெயராய்வு",author:"முகேசன் சு.",pages:"135-145",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:195,title:"'உம்' என்னும் இடைச்சொல்",author:"ஆரோக்கியநாதன் எஸ்.",pages:"147-155",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:196,title:"முன்னிலைப்பெயர்",author:"வையாரிப்பிள்ளை ச.",pages:"157-173",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:197,title:"வங்க மொழியிலிருந்து சொல்விளையாட்டுகளை மொழிப்பெயர்க்கும் போது ஏற்படும் மொழியியல் பிரச்சனைகள்",author:"பானுமதி இரா.",pages:"175-192",year:"1987",period:"ஜூலை",vol:"10",no:"1-4",special:""},
+  {id:198,title:"தொல்காப்பியரது முன் மொழிக்கத்துக்கள்",author:"அண்ணாமலை இ.",pages:"1-14",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:199,title:"கல்வெட்டுத் தமிழில் தொடரியல் அமைப்பு",author:"பாக்கியலட்சுமி இரா.",pages:"15-26",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:200,title:"தமிழ் மலையாளக் கேள்வி வாக்கியங்கள்",author:"சுப்பராஜ் வே.சா.",pages:"27-34",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:201,title:"கம்பராமாயணத்தில் நடையியலுன் சிறப்பத்தன்மை பற்றிய அளவீடு",author:"காமேஸ்வரி தெ.நா.",pages:"35-42",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:202,title:"தமிழ்க் கலைச்சொல்லாக்க நெறிமுறைகள் ஒரு வரலாற்று அளவீடு",author:"சண்முகம் செ.வை.",pages:"43-82",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:203,title:"தொல்காப்பியமும் யாப்பும்",author:"தாட்சாயணி கே. வி.",pages:"83-100",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:204,title:"இலக்கண நூற்களில் பெயர்ச்சொற்களின் பாகுபாடு",author:"மகாலட்சுமி.",pages:"101-108",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:205,title:"பொளடக்கத் தொடர்ச் சொற்கள்",author:"கணாகரன் கி. & சண்முகம் செ.",pages:"109-131",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:206,title:"பத்தொன்பதாம் நூற்றாண்டின் நவீன உரைநடை இயக்கமும் ஆமுக நாவலும்",author:"சுஃமான் எம்.ஏ.",pages:"132-162",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:207,title:"செந்தமிழ் இலக்கணம்",author:"யம் பெ.",pages:"163-188",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:208,title:"அகராதிச்சொற்கள்",author:"மாதையன் பெ.",pages:"189-209",year:"1988",period:"ஜூலை",vol:"11",no:"1-4",special:""},
+  {id:209,title:"மொழிச்சங்கங்கள்",author:"சண்முகம் செ.வை.",pages:"1-40",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:210,title:"பிஜின், கிரியோல் மொழி வகைகள்",author:"ஸ்ரீனிவாச வர்மா கோ.",pages:"41-52",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:211,title:"அமைப்பு மொழியியலும் மாற்றிலக்கணமும்",author:"அரங்கன் கி.",pages:"53-72",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:212,title:"தமிழ் இலக்கண மரபில் துணைவினைகள்",author:"இஸ்ரேல் மோ.",pages:"73-86",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:213,title:"தேசிகத்தி",author:"கார்த்திகேயன் ஆ.",pages:"87-92",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:214,title:"தமிழ் நாட்டில் எழுத்தறிவுத் திட்டங்கள்",author:"அண்ணாதுரை சு.",pages:"93-98",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:215,title:"கவி வேற்றுமையின் தைநிலை அமைப்பு - ஓர் ஆய்வு",author:"சுப்பராஜ் வே.சா.",pages:"99-108",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:216,title:"சங்கத் தமிழ் உறவுமுறைச் சொற்பொருண்மை",author:"சந்திரத்திரன் எச்.",pages:"109-132",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:217,title:"கிரியா அகராதி பெயரடைவினையடைப் பதிவுகள்",author:"மாதையன் பெ.",pages:"133-162",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:218,title:"தமிழில் சொல்லாக்கம்",author:"இராசேந்திரன் ச.",pages:"163-192",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:219,title:"பலபொள் ஒருசொல்",author:"குநாதன் வ.",pages:"193-204",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:220,title:"உரையாடல் நோக்குகளும் திறனும்",author:"நடராசப்பிள்ளை ந.",pages:"205-218",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:221,title:"உறவுமுறை அமைப்பு மொழிக்குடும்பம்",author:"இராபர்ட் சத்திய சோசப்தா.",pages:"219-236",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:222,title:"பழந்தமிழில் தான் பதிலுடுபெயர்",author:"லா எம்.",pages:"237-250",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:223,title:"தொல்காப்பியம் காட்டும் அடிமைநிலை ஈவு",author:"வரப்பிள்ளை தா.",pages:"251-262",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:224,title:"கதோட்டத்தில் நடையியற் நோக்களின் பங்கு",author:"ஆலஸ் அ.",pages:"263-284",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:225,title:"வரலாற்றுமுறைத் தமிழ்ப் பேரகராதிக்குப் பின்னலப் பணிகள்",author:"பால சுப்பிரமணியன் க.",pages:"285-304",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:226,title:"மொழி வளர்ச்சியும் வடிப்பித்தலும் இலக்கணச்சூடாமணி",author:"கிருஷ்ணமூர்த்தி சா.",pages:"305-316",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:227,title:"குறள் மொழி",author:"தயாளன் வே. & ஜெயா வ.",pages:"317-326",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:228,title:"அற்றாங்கு",author:"கோதண்டராமன் இரா.",pages:"327-346",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:229,title:"மொழிப்துய்மையாக்கத்தில் அகராதியின் பங்கு",author:"அண்ணாமலை இ.",pages:"347-356",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:230,title:"யாதன் உபில் நூறிற்கு ஆயினும்",author:"நடராஜன் ஆ.கோ.",pages:"357-376",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:231,title:"கல்வி ஆட்சித்துறைகளில் தமிழ்ப் பயன்பாடு (சமுதாய மொழியியல் நோக்கில்)",author:"கணாகரன் கி.",pages:"377-410",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்"},
+  {id:232,title:"மொழிபெயர்ப்பில் காணும் சில சிக்கல்கள்",author:"பையா கோ.",pages:"411-420",year:"1989",period:"ஜூலை 1989 - ஜூன் 1991",vol:"13&14",no:"1-4",special:"அகத்தியலிங்கனார் மணிவிழா மலர்",available:true},
+  // Content unavailable issues - only cover page in TVA
+  {id:117,title:"இதழின் முகப்பு பக்கம் மட்டுமே கிடைக்கிறது",author:"—",pages:"—",year:"1981",period:"ஜூலை - செப்டம்பர்",vol:"5",no:"1",special:"",available:false},
+  {id:118,title:"இதழின் முகப்பு பக்கம் மட்டுமே கிடைக்கிறது",author:"—",pages:"—",year:"1981",period:"அக்டோபர் - டிசம்பர்",vol:"5",no:"2",special:"",available:false},
+  {id:131,title:"இதழின் முகப்பு பக்கம் மட்டுமே கிடைக்கிறது",author:"—",pages:"—",year:"1982",period:"ஜூலை - செப்டம்பர்",vol:"6",no:"1",special:"",available:false},
+  {id:132,title:"இதழின் முகப்பு பக்கம் மட்டுமே கிடைக்கிறது",author:"—",pages:"—",year:"1982",period:"அக்டோபர் - டிசம்பர்",vol:"6",no:"2",special:"",available:false},
+  {id:140,title:"இதழின் முகப்பு பக்கம் மட்டுமே கிடைக்கிறது",author:"—",pages:"—",year:"1983",period:"ஜூலை - டிசம்பர்",vol:"7",no:"1&2",special:"",available:false},
+];
+
+let sortCol = 'id', sortAsc = true, query = '', filterYear = '', filterVol = '';
+
+// Populate filters
+const years = [...new Set(ARTICLES.map(a => a.year))].sort();
+const vols  = [...new Set(ARTICLES.map(a => a.vol))].sort((a,b)=>parseFloat(a)-parseFloat(b));
+const yearSel = document.getElementById('yearFilter');
+const volSel  = document.getElementById('volFilter');
+years.forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; yearSel.appendChild(o); });
+vols.forEach(v  => { const o = document.createElement('option'); o.value = v; o.textContent = 'தொகுதி ' + v; volSel.appendChild(o); });
+
+document.getElementById('s-total').textContent = ARTICLES.length;
+
+function hl(text, q) {
+  if (!q) return text;
+  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function render() {
+  let data = ARTICLES.filter(a => {
+    const q = query.toLowerCase();
+    const match = !q || a.title.toLowerCase().includes(q) || a.author.toLowerCase().includes(q);
+    const yMatch = !filterYear || a.year === filterYear;
+    const vMatch = !filterVol  || a.vol  === filterVol;
+    return match && yMatch && vMatch;
+  });
+
+  data.sort((a, b) => {
+    let av = a[sortCol], bv = b[sortCol];
+    if (sortCol === 'id' || sortCol === 'pages') {
+      av = parseInt(av) || 0; bv = parseInt(bv) || 0;
+      return sortAsc ? av - bv : bv - av;
+    }
+    return sortAsc ? String(av).localeCompare(String(bv), 'ta') : String(bv).localeCompare(String(av), 'ta');
+  });
+
+  const tbody = document.getElementById('tableBody');
+  const noRes = document.getElementById('noResults');
+  document.getElementById('resultCount').textContent = data.length + ' கட்டுரைகள்';
+
+  if (!data.length) { tbody.innerHTML = ''; noRes.style.display=''; return; }
+  noRes.style.display = 'none';
+
+  tbody.innerHTML = data.map((a, i) => {
+    const isUnavail = a.available === false;
+    const tvaCid = 'TWpFPUF0b1phdG96MHRvOQ--';
+    const tvaBase = `https://tamildigitallibrary.in/book_list_view_book?selected_title=%E0%AE%AE%E0%AF%8A%E0%AE%B4%E0%AE%BF%E0%AE%AF%E0%AE%BF%E0%AE%AF%E0%AE%B2%E0%AF%8D&cid=${tvaCid}&stype=`;
+    const tvaCell = isUnavail
+      ? `<span class="unavailable">உள்ளடக்கம் கிடைக்கவில்லை</span>`
+      : `<a href="${tvaBase}" target="_blank" rel="noopener" class="tva-link">
+           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+           TVA
+         </a>`;
+    return `
+    <tr class="${isUnavail ? 'content-unavailable' : (i%2===0?'':'even')}">
+      <td class="num-col">${a.id}</td>
+      <td class="title-col">${hl(a.title, query)}${a.special ? `<span class="special-badge">${a.special}</span>` : ''}</td>
+      <td class="author-col">${hl(a.author, query)}</td>
+      <td class="pages-col">${a.pages}</td>
+      <td class="year-col">${a.year}<br><span style="color:var(--dim);font-size:0.73rem">${a.period}</span></td>
+      <td class="vol-col"><span class="vol-badge">தொ. ${a.vol} எண். ${a.no}</span></td>
+      <td class="link-col">${tvaCell}</td>
+    </tr>`;
+  }).join('');
+}
+
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    document.querySelectorAll('thead th').forEach(h => h.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.sort-icon').textContent = sortAsc ? '▲' : '▼';
+    render();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', e => { query = e.target.value; render(); });
+document.getElementById('yearFilter').addEventListener('change', e => { filterYear = e.target.value; render(); });
+document.getElementById('volFilter').addEventListener('change',  e => { filterVol  = e.target.value; render(); });
+
+render();
+</script>
+</body>
+</html>
